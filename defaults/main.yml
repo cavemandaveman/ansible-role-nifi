@@ -40,8 +40,6 @@ nifi_properties:
   nifi_cluster_node_protocol_port: ""
 
 bootstrap_conf:
-  # Username to use when running NiFi. This value will be ignored on Windows.
-  run_as: ""
   # JVM memory settings
   java_arg_2: "-Xms512m"
   java_arg_3: "-Xmx512m"
