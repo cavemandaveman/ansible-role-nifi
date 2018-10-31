@@ -46,3 +46,37 @@ bootstrap_conf:
   # Requires JAAS to use only the provided JAAS configuration to authenticate a Subject, without using any "fallback" methods (such as prompting for username/password)
   # Please see https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/single-signon.html, section "EXCEPTIONS TO THE MODEL"
   java_arg_16: "-Djavax.security.auth.useSubjectCredsOnly=true"
+
+logback:
+  app_file_max_file_size: "100MB"
+  app_file_max_history: "30"
+  user_file_max_history: "30"
+  bootstrap_file_max_history: "5"
+
+login_identity_provider:
+  # Can be one of 'ldap-provider' or 'kerberos-provider'. Leave blank for no RBAC.
+  identifier: ""
+  ldap:
+    authentication_strategy: "START_TLS"
+    manager_dn: ""
+    manager_password: ""
+    tls_keystore: ""
+    tls_keystore_password: ""
+    tls_keystore_type: ""
+    tls_truststore: ""
+    tls_truststore_password: ""
+    tls_truststore_type: ""
+    client_auth: ""
+    protocol: ""
+    shutdown_gracefully: ""
+    referral_strategy: "FOLLOW"
+    connect_timeout: "10 secs"
+    read_timeout: "10 secs"
+    url: ""
+    user_search_base: ""
+    user_search_filter: ""
+    identity_strategy: "USE_DN"
+    authentication_expiration: "12 hours"
+  kerberos:
+    default_realm: "NIFI.APACHE.ORG"
+    authentication_expiration: "12 hours"
