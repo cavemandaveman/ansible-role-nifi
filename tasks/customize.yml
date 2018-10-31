@@ -1,0 +1,21 @@
+---
+- name: Create shared resources directory
+  file:
+    path: "{{ config_dirs.nifi_external_config }}"
+    state: "directory"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
+
+- name: Copy nifi.properties template
+  template:
+    src: "templates/nifi.properties.j2"
+    dest: "{{ config_dirs.nifi_home }}/conf/nifi.properties"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
+
+- name: Copy bootstrap.conf template
+  template:
+    src: "templates/bootstrap.conf.j2"
+    dest: "{{ config_dirs.nifi_home }}/conf/bootstrap.conf"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"

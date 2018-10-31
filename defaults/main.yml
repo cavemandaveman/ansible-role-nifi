@@ -1,0 +1,50 @@
+---
+nifi_version: "1.7.1"
+# See https://www.apache.org/dyn/closer.lua to find mirrors
+download_mirror_uri: "http://apache.cs.utah.edu"
+
+nifi_user: "nifi"
+nifi_group: "nifi"
+
+config_dirs:
+  nifi_install: "/opt/nifi/releases"
+  nifi_home: "/opt/nifi/releases/current"
+  nifi_external_config: "/opt/nifi/config_resources"
+
+nifi_properties:
+  # Site to Site properties
+  nifi_remote_input_host: ""
+  nifi_remote_input_secure: "false"
+  nifi_remote_input_socket_port: ""
+  nifi_remote_input_http_enabled: "true"
+  # web properties
+  nifi_web_http_host: ""
+  nifi_web_http_port: "8080"
+  nifi_web_https_host: ""
+  nifi_web_https_port: ""
+  # security properties
+  nifi_security_keystore: ""
+  nifi_security_keystoreType: ""
+  nifi_security_keystorePasswd: ""
+  nifi_security_keyPasswd: ""
+  nifi_security_truststore: ""
+  nifi_security_truststoreType: ""
+  nifi_security_truststorePasswd: ""
+  nifi_security_needClientAuth: ""
+  # cluster common properties (all nodes must have same values) #
+  nifi_cluster_protocol_heartbeat_interval: "5 sec"
+  nifi_cluster_protocol_is_secure: "false"
+  # cluster node properties (only configure for cluster nodes) #
+  nifi_cluster_is_node: "false"
+  nifi_cluster_node_address: ""
+  nifi_cluster_node_protocol_port: ""
+
+bootstrap_conf:
+  # Username to use when running NiFi. This value will be ignored on Windows.
+  run_as: ""
+  # JVM memory settings
+  java_arg_2: "-Xms512m"
+  java_arg_3: "-Xmx512m"
+  # Requires JAAS to use only the provided JAAS configuration to authenticate a Subject, without using any "fallback" methods (such as prompting for username/password)
+  # Please see https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/single-signon.html, section "EXCEPTIONS TO THE MODEL"
+  java_arg_16: "-Djavax.security.auth.useSubjectCredsOnly=true"

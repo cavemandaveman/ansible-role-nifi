@@ -1,0 +1,15 @@
+[Unit]
+Description=Apache NiFi as service
+After=network.target
+
+[Service]
+Type=forking
+User={{ nifi_user }}
+Group={{ nifi_group }}
+ExecStart={{ config_dirs.nifi_home }}/bin/nifi.sh start
+ExecStop={{ config_dirs.nifi_home }}/bin/nifi.sh stop
+ExecRestart={{ config_dirs.nifi_home }}/bin/nifi.sh restart
+ExecStatus={{ config_dirs.nifi_home }}/bin/nifi.sh status
+
+[Install]
+WantedBy=multi-user.target

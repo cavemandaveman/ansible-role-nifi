@@ -1,0 +1,12 @@
+---
+- name: Prepare system
+  include: prepare.yml
+
+- name: Install NiFi
+  include: install.yml
+
+- name: Customize NiFi
+  include: customize.yml
+
+- name: Run NiFi as system service
+  include: run.yml

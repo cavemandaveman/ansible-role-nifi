@@ -1,0 +1,22 @@
+---
+- name: Create NiFi group
+  group:
+    name: "{{ nifi_group }}"
+    state: "present"
+    system: "yes"
+
+- name: Create NiFi user
+  user:
+    name: "nifi"
+    groups: "root,nifi"
+    append: "yes"
+    state: "present"
+    create_home: "no"
+    system: "yes"
+
+- name: Create install directory
+  file:
+    path: "{{ config_dirs.nifi_install }}"
+    state: "directory"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
