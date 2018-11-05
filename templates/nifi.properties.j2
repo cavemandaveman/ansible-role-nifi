@@ -85,7 +85,7 @@ nifi.content.repository.always.sync=false
 nifi.content.viewer.url=../nifi-content-viewer/
 
 # Provenance Repository Properties
-nifi.provenance.repository.implementation=org.apache.nifi.provenance.PersistentProvenanceRepository
+nifi.provenance.repository.implementation=org.apache.nifi.provenance.WriteAheadProvenanceRepository
 nifi.provenance.repository.debug.frequency=1_000_000
 nifi.provenance.repository.encryption.key.provider.implementation=
 nifi.provenance.repository.encryption.key.provider.location=
@@ -102,7 +102,6 @@ nifi.provenance.repository.query.threads=2
 nifi.provenance.repository.index.threads=2
 nifi.provenance.repository.compress.on.rollover=true
 nifi.provenance.repository.always.sync=false
-nifi.provenance.repository.journal.count=16
 # Comma-separated list of fields. Fields that are not indexed will not be searchable. Valid fields are: 
 # EventType, FlowFileUUID, Filename, TransitURI, ProcessorID, AlternateIdentifierURI, Relationship, Details
 nifi.provenance.repository.indexed.fields=EventType, FlowFileUUID, Filename, ProcessorID, Relationship
@@ -115,7 +114,6 @@ nifi.provenance.repository.index.shard.size=500 MB
 # the repository. If the length of any attribute exceeds this value, it will be truncated when the event is retrieved.
 nifi.provenance.repository.max.attribute.length=65536
 nifi.provenance.repository.concurrent.merge.threads=2
-nifi.provenance.repository.warm.cache.frequency=1 hour
 
 # Volatile Provenance Respository Properties
 nifi.provenance.repository.buffer.size=100000
@@ -161,7 +159,6 @@ nifi.security.keyPasswd={{ nifi_properties.nifi_security_keyPasswd }}
 nifi.security.truststore={{ nifi_properties.nifi_security_truststore }}
 nifi.security.truststoreType={{ nifi_properties.nifi_security_truststoreType }}
 nifi.security.truststorePasswd={{ nifi_properties.nifi_security_truststorePasswd }}
-nifi.security.needClientAuth={{ nifi_properties.nifi_security_needClientAuth }}
 nifi.security.user.authorizer=managed-authorizer
 nifi.security.user.login.identity.provider={{ login_identity_provider.identifier }}
 nifi.security.ocsp.responder.url=
@@ -218,6 +215,13 @@ nifi.cluster.node.max.concurrent.requests=100
 nifi.cluster.firewall.file=
 nifi.cluster.flow.election.max.wait.time=5 mins
 nifi.cluster.flow.election.max.candidates=
+
+# cluster load balancing properties #
+nifi.cluster.load.balance.host=
+nifi.cluster.load.balance.port=6342
+nifi.cluster.load.balance.connections.per.node=4
+nifi.cluster.load.balance.max.thread.count=8
+nifi.cluster.load.balance.comms.timeout=30 sec
 
 # zookeeper properties, used for cluster management #
 nifi.zookeeper.connect.string=
