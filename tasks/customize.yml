@@ -47,3 +47,7 @@
     dest: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
+
+- name: Prepare Zookeeper
+  include: zookeeper.yml
+  when: nifi_properties.nifi_state_management_embedded_zookeeper_start | bool == true

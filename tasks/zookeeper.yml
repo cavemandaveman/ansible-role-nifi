@@ -1,0 +1,27 @@
+---
+- name: Create Zookeeper data directory
+  file:
+    path: "{{ config_dirs.nifi_external_config }}/state/zookeeper"
+    state: "directory"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
+
+- name: Create Zookeeper ID file from template
+  vars:
+    myid: "{{ my_idx + 1 }}"
+  template:
+    src: "templates/myid.j2"
+    dest: "{{ config_dirs.nifi_external_config }}/state/zookeeper/myid"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
+  when: "item == inventory_hostname"
+  with_items: "{{ nifi_servers }}"
+  loop_control:
+    index_var: my_idx
+
+- name: Copy zookeeper.properties template
+  template:
+    src: "templates/zookeeper.properties.j2"
+    dest: "{{ config_dirs.nifi_home }}/conf/zookeeper.properties"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"

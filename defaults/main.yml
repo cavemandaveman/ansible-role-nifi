@@ -3,6 +3,9 @@ nifi_version: "1.8.0"
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: "http://apache.cs.utah.edu"
 
+# array of server hostnames, by default reads 'nifi_servers' group from inventory file
+nifi_servers: "{{ groups['nifi_servers'] }}"
+
 nifi_user: "nifi"
 nifi_group: "nifi"
 
@@ -12,11 +15,6 @@ config_dirs:
   nifi_external_config: "/opt/nifi/config_resources"
 
 nifi_properties:
-  # Site to Site properties
-  nifi_remote_input_host: ""
-  nifi_remote_input_secure: "false"
-  nifi_remote_input_socket_port: ""
-  nifi_remote_input_http_enabled: "true"
   # web properties
   nifi_web_http_host: ""
   nifi_web_http_port: "8080"
@@ -30,6 +28,11 @@ nifi_properties:
   nifi_security_truststore: ""
   nifi_security_truststoreType: ""
   nifi_security_truststorePasswd: ""
+  # Site to Site properties
+  nifi_remote_input_host: ""
+  nifi_remote_input_secure: "false"
+  nifi_remote_input_socket_port: ""
+  nifi_remote_input_http_enabled: "true"
   # cluster common properties (all nodes must have same values) #
   nifi_cluster_protocol_heartbeat_interval: "5 sec"
   nifi_cluster_protocol_is_secure: "false"
@@ -37,6 +40,13 @@ nifi_properties:
   nifi_cluster_is_node: "false"
   nifi_cluster_node_address: ""
   nifi_cluster_node_protocol_port: ""
+  # cluster load balancing properties #
+  nifi_cluster_load_balance_host: ""
+  nifi_cluster_load_balance_port: "6342"
+  # zookeeper properties, used for cluster management #
+  nifi_zookeeper_connect_string: ""
+  # Specifies whether or not this instance of NiFi should run an embedded ZooKeeper server
+  nifi_state_management_embedded_zookeeper_start: "false"
 
 bootstrap_conf:
   # JVM memory settings

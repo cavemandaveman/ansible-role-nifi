@@ -49,7 +49,7 @@ nifi.state.management.provider.local=local-provider
 # The ID of the cluster-wide state provider. This will be ignored if NiFi is not clustered but must be populated if running in a cluster.
 nifi.state.management.provider.cluster=zk-provider
 # Specifies whether or not this instance of NiFi should run an embedded ZooKeeper server
-nifi.state.management.embedded.zookeeper.start=false
+nifi.state.management.embedded.zookeeper.start={{ nifi_properties.nifi_state_management_embedded_zookeeper_start }}
 # Properties file that provides the ZooKeeper properties to use if <nifi.state.management.embedded.zookeeper.start> is set to true
 nifi.state.management.embedded.zookeeper.properties=./conf/zookeeper.properties
 
@@ -217,14 +217,14 @@ nifi.cluster.flow.election.max.wait.time=5 mins
 nifi.cluster.flow.election.max.candidates=
 
 # cluster load balancing properties #
-nifi.cluster.load.balance.host=
-nifi.cluster.load.balance.port=6342
+nifi.cluster.load.balance.host={{ nifi_properties.nifi_cluster_load_balance_host }}
+nifi.cluster.load.balance.port={{ nifi_properties.nifi_cluster_load_balance_port }}
 nifi.cluster.load.balance.connections.per.node=4
 nifi.cluster.load.balance.max.thread.count=8
 nifi.cluster.load.balance.comms.timeout=30 sec
 
 # zookeeper properties, used for cluster management #
-nifi.zookeeper.connect.string=
+nifi.zookeeper.connect.string={{ nifi_properties.nifi_zookeeper_connect_string }}
 nifi.zookeeper.connect.timeout=3 secs
 nifi.zookeeper.session.timeout=3 secs
 nifi.zookeeper.root.node=/nifi
