@@ -40,11 +40,11 @@ nifi_properties:
   nifi_cluster_is_node: "false"
   nifi_cluster_node_address: ""
   nifi_cluster_node_protocol_port: ""
+  nifi_cluster_flow_election_max_wait_time: "5 mins"
+  nifi_cluster_flow_election_max_candidates: ""
   # cluster load balancing properties #
   nifi_cluster_load_balance_host: ""
   nifi_cluster_load_balance_port: "6342"
-  # zookeeper properties, used for cluster management #
-  nifi_zookeeper_connect_string: ""
   # Specifies whether or not this instance of NiFi should run an embedded ZooKeeper server
   nifi_state_management_embedded_zookeeper_start: "false"
 

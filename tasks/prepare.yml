@@ -20,3 +20,9 @@
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
+
+- name: Set NiFi home
+  lineinfile:
+    path: "/etc/environment"
+    line: "export NIFI_HOME={{ config_dirs.nifi_home }}"
+    create: "yes"
