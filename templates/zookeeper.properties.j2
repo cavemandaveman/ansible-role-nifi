@@ -1,8 +1,10 @@
 clientPort=2181
 initLimit=10
+autopurge.purgeInterval=24
 syncLimit=5
 tickTime=2000
 dataDir={{ config_dirs.nifi_external_config }}/state/zookeeper
+autopurge.snapRetainCount=30
 {% for host in nifi_servers %}
 server.{{ loop.index }}={{ host }}:2888:3888
 {% endfor %}

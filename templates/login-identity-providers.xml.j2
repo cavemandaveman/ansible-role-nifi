@@ -24,39 +24,39 @@
     <provider>
         <identifier>ldap-provider</identifier>
         <class>org.apache.nifi.ldap.LdapProvider</class>
-        <property name="Authentication Strategy">START_TLS</property>
+        <property name="Authentication Strategy">{{ login_identity_provider.ldap.authentication_strategy }}</property>
 
-        <property name="Manager DN"></property>
-        <property name="Manager Password"></property>
+        <property name="Manager DN">{{ login_identity_provider.ldap.manager_dn }}</property>
+        <property name="Manager Password">{{ login_identity_provider.ldap.manager_password }}</property>
 
-        <property name="TLS - Keystore"></property>
-        <property name="TLS - Keystore Password"></property>
-        <property name="TLS - Keystore Type"></property>
-        <property name="TLS - Truststore"></property>
-        <property name="TLS - Truststore Password"></property>
-        <property name="TLS - Truststore Type"></property>
-        <property name="TLS - Client Auth"></property>
-        <property name="TLS - Protocol"></property>
-        <property name="TLS - Shutdown Gracefully"></property>
+        <property name="TLS - Keystore">{{ login_identity_provider.ldap.tls_keystore }}</property>
+        <property name="TLS - Keystore Password">{{ login_identity_provider.ldap.tls_keystore_password }}</property>
+        <property name="TLS - Keystore Type">{{ login_identity_provider.ldap.tls_keystore_type }}</property>
+        <property name="TLS - Truststore">{{ login_identity_provider.ldap.tls_truststore }}</property>
+        <property name="TLS - Truststore Password">{{ login_identity_provider.ldap.tls_truststore_password }}</property>
+        <property name="TLS - Truststore Type">{{ login_identity_provider.ldap.tls_truststore_type }}</property>
+        <property name="TLS - Client Auth">{{ login_identity_provider.ldap.tls_client_auth }}</property>
+        <property name="TLS - Protocol">{{ login_identity_provider.ldap.tls_protocol }}</property>
+        <property name="TLS - Shutdown Gracefully">{{ login_identity_provider.ldap.tls_shutdown_gracefully }}</property>
         
-        <property name="Referral Strategy">FOLLOW</property>
-        <property name="Connect Timeout">10 secs</property>
-        <property name="Read Timeout">10 secs</property>
+        <property name="Referral Strategy">{{ login_identity_provider.ldap.referral_strategy }}</property>
+        <property name="Connect Timeout">{{ login_identity_provider.ldap.connect_timeout }}</property>
+        <property name="Read Timeout">{{ login_identity_provider.ldap.read_timeout }}</property>
 
-        <property name="Url"></property>
-        <property name="User Search Base"></property>
-        <property name="User Search Filter"></property>
+        <property name="Url">{{ login_identity_provider.ldap.url }}</property>
+        <property name="User Search Base">{{ login_identity_provider.ldap.url_search_base }}</property>
+        <property name="User Search Filter">{{ login_identity_provider.ldap.url_search_filter }}</property>
 
-        <property name="Identity Strategy">USE_DN</property>
-        <property name="Authentication Expiration">12 hours</property>
+        <property name="Identity Strategy">{{ login_identity_provider.ldap.identity_strategy }}</property>
+        <property name="Authentication Expiration">{{ login_identity_provider.ldap.authentication_expiration }}</property>
     </provider>
 
     {% elif login_identity_provider.identifier == "kerberos-provider" %}
     <provider>
         <identifier>kerberos-provider</identifier>
         <class>org.apache.nifi.kerberos.KerberosProvider</class>
-        <property name="Default Realm">NIFI.APACHE.ORG</property>
-        <property name="Authentication Expiration">12 hours</property>
+        <property name="Default Realm">{{ login_identity_provider.kerberos.default_realm }}</property>
+        <property name="Authentication Expiration">{{ login_identity_provider.kerberos.authentication_expiration }}</property>
     </provider>
     {% endif %}
 
