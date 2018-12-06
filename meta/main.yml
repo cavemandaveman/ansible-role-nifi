@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: nifi
   author: cavemandaveman
   description: Apache NiFi
   license: GPLv3
