@@ -50,6 +50,9 @@
         <property name="Legacy Authorized Users File"></property>
 
         <property name="Initial User Identity 1">{{ login_identity_provider.initial_admin_identity }}</property>
+        {% for host in nifi_servers %}
+        <property name="Initial User Identity {{ loop.index + 1 }}">CN={{ host }}</property>
+        {% endfor %}
     </userGroupProvider>
 
     <!--
@@ -251,7 +254,9 @@
         <property name="Authorizations File">{{ config_dirs.nifi_external_config }}/authorizations.xml</property>
         <property name="Initial Admin Identity">{{ login_identity_provider.initial_admin_identity }}</property>
         <property name="Legacy Authorized Users File"></property>
-        <property name="Node Identity 1"></property>
+        {% for host in nifi_servers %}
+        <property name="Node Identity {{ loop.index }}">CN={{ host }}</property>
+        {% endfor %}
         <property name="Node Group"></property>
     </accessPolicyProvider>
 
