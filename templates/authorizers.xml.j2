@@ -49,7 +49,7 @@
         <property name="Users File">{{ config_dirs.nifi_external_config }}/users.xml</property>
         <property name="Legacy Authorized Users File"></property>
 
-        <property name="Initial User Identity 1"></property>
+        <property name="Initial User Identity 1">{{ login_identity_provider.initial_admin_identity }}</property>
     </userGroupProvider>
 
     <!--
@@ -249,7 +249,7 @@
         <class>org.apache.nifi.authorization.FileAccessPolicyProvider</class>
         <property name="User Group Provider">file-user-group-provider</property>
         <property name="Authorizations File">{{ config_dirs.nifi_external_config }}/authorizations.xml</property>
-        <property name="Initial Admin Identity"></property>
+        <property name="Initial Admin Identity">{{ login_identity_provider.initial_admin_identity }}</property>
         <property name="Legacy Authorized Users File"></property>
         <property name="Node Identity 1"></property>
         <property name="Node Group"></property>

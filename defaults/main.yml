@@ -65,6 +65,7 @@ logback:
 login_identity_provider:
   # Can be one of 'ldap-provider' or 'kerberos-provider'. Leave blank for no RBAC.
   identifier: ""
+  initial_admin_identity: ""
   ldap:
     authentication_strategy: "START_TLS"
     manager_dn: ""
