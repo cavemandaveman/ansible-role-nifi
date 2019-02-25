@@ -49,10 +49,12 @@
         <property name="Users File">{{ config_dirs.nifi_external_config }}/users.xml</property>
         <property name="Legacy Authorized Users File"></property>
 
-        <property name="Initial User Identity 1">{{ login_identity_provider.initial_admin_identity }}</property>
-        {% for host in nifi_servers %}
-        <property name="Initial User Identity {{ loop.index + 1 }}">CN={{ host }}</property>
+        <property name="Initial User Identity 1">{{ initial_admin_identity }}</property>
+        {% if cluster_properties is defined and cluster_properties.identities | length %}
+        {% for id in cluster_properties.identities %}
+        <property name="Initial User Identity {{ loop.index + 1 }}">{{ id }}</property>
         {% endfor %}
+        {% endif %}
     </userGroupProvider>
 
     <!--
@@ -252,11 +254,13 @@
         <class>org.apache.nifi.authorization.FileAccessPolicyProvider</class>
         <property name="User Group Provider">file-user-group-provider</property>
         <property name="Authorizations File">{{ config_dirs.nifi_external_config }}/authorizations.xml</property>
-        <property name="Initial Admin Identity">{{ login_identity_provider.initial_admin_identity }}</property>
+        <property name="Initial Admin Identity">{{ initial_admin_identity }}</property>
         <property name="Legacy Authorized Users File"></property>
-        {% for host in nifi_servers %}
-        <property name="Node Identity {{ loop.index }}">CN={{ host }}</property>
+        {% if cluster_properties is defined and cluster_properties.identities | length %}
+        {% for id in cluster_properties.identities %}
+        <property name="Node Identity {{ loop.index }}">{{ id }}</property>
         {% endfor %}
+        {% endif %}
         <property name="Node Group"></property>
     </accessPolicyProvider>
 

@@ -6,19 +6,19 @@
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
 
-- name: Copy nifi.properties template
-  template:
-    src: "templates/nifi.properties.j2"
-    dest: "{{ config_dirs.nifi_home }}/conf/nifi.properties"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
+- name: Update nifi.properties
+  lineinfile:
+    path: "{{ config_dirs.nifi_home }}/conf/nifi.properties"
+    line: "{{ item.key }}={{ item.value }}"
+    regexp: "^{{ item.key }}"
+  with_dict: "{{ nifi_properties }}"
 
-- name: Copy bootstrap.conf template
-  template:
-    src: "templates/bootstrap.conf.j2"
-    dest: "{{ config_dirs.nifi_home }}/conf/bootstrap.conf"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
+- name: Update bootstrap.conf
+  lineinfile:
+    path: "{{ config_dirs.nifi_home }}/conf/bootstrap.conf"
+    line: "{{ item.key }}={{ item.value }}"
+    regexp: "^{{ item.key }}"
+  with_dict: "{{ bootstrap_conf }}"
 
 - name: Copy state-management.xml template
   template:
@@ -34,20 +34,28 @@
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
 
-- name: Copy logback.xml template
-  template:
-    src: "templates/logback.xml.j2"
-    dest: "{{ config_dirs.nifi_home }}/conf/logback.xml"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
+- name: Update logback.xml
+  xml:
+    path: "{{ config_dirs.nifi_home }}/conf/logback.xml"
+    xpath: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_dict: "{{ logback }}"
 
-- name: Copy login-identity-providers.xml template
-  template:
-    src: "templates/login-identity-providers.xml.j2"
-    dest: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
+- name: Update login-identity-providers.xml
+  block:
+    - replace:
+        path: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
+        regexp: "^.*To enable the {{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}.*$"
+        replace: ""
+    - xml:
+        path: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
+        xpath: "{{ item.key }}"
+        value: "{{ item.value }}"
+      with_dict: "{{ login_identity_providers }}"
+  when: login_identity_providers['/loginIdentityProviders/provider/identifier'] | length
 
 - name: Prepare Zookeeper
   include: zookeeper.yml
-  when: nifi_properties.nifi_state_management_embedded_zookeeper_start | bool == true
+  when:
+    - nifi_properties['nifi.state.management.embedded.zookeeper.start'] is defined
+    - nifi_properties['nifi.state.management.embedded.zookeeper.start'] | bool == true

@@ -8,7 +8,7 @@
 - name: Create NiFi user
   user:
     name: "{{ nifi_user }}"
-    groups: "root,{{ nifi_group }}"
+    groups: "{{ nifi_group }}"
     append: "yes"
     state: "present"
     create_home: "no"

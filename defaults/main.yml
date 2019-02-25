@@ -1,5 +1,5 @@
 ---
-nifi_version: "1.8.0"
+nifi_version: "1.9.0"
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: "http://apache.cs.utah.edu"
 
@@ -14,79 +14,29 @@ config_dirs:
   nifi_home: "/opt/nifi/releases/current"
   nifi_external_config: "/opt/nifi/config_resources"
 
+# Specify any property from nifi.properties here. Leave blank for defaults.
+# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/nifi.properties for current options.
 nifi_properties:
-  # web properties
-  nifi_web_http_host: ""
-  nifi_web_http_port: "8080"
-  nifi_web_https_host: ""
-  nifi_web_https_port: ""
-  # security properties
-  nifi_security_keystore: ""
-  nifi_security_keystoreType: ""
-  nifi_security_keystorePasswd: ""
-  nifi_security_keyPasswd: ""
-  nifi_security_truststore: ""
-  nifi_security_truststoreType: ""
-  nifi_security_truststorePasswd: ""
-  # Site to Site properties
-  nifi_remote_input_host: ""
-  nifi_remote_input_secure: "false"
-  nifi_remote_input_socket_port: ""
-  nifi_remote_input_http_enabled: "true"
-  # cluster common properties (all nodes must have same values) #
-  nifi_cluster_protocol_heartbeat_interval: "5 sec"
-  nifi_cluster_protocol_is_secure: "false"
-  # cluster node properties (only configure for cluster nodes) #
-  nifi_cluster_is_node: "false"
-  nifi_cluster_node_address: ""
-  nifi_cluster_node_protocol_port: ""
-  nifi_cluster_flow_election_max_wait_time: "5 mins"
-  nifi_cluster_flow_election_max_candidates: ""
-  # cluster load balancing properties #
-  nifi_cluster_load_balance_host: ""
-  nifi_cluster_load_balance_port: "6342"
-  # Specifies whether or not this instance of NiFi should run an embedded ZooKeeper server
-  nifi_state_management_embedded_zookeeper_start: "false"
+  nifi.web.http.port: 8080
 
+cluster_properites:
+  # List of full DN's from SSL certificates of nodes
+  identities: []
+
+# Specify any property from bootstrap.conf here. Leave blank for defaults.
+# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/bootstrap.conf for current options.
 bootstrap_conf:
-  # JVM memory settings
-  java_arg_2: "-Xms512m"
-  java_arg_3: "-Xmx512m"
-  # Requires JAAS to use only the provided JAAS configuration to authenticate a Subject, without using any "fallback" methods (such as prompting for username/password)
-  # Please see https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/single-signon.html, section "EXCEPTIONS TO THE MODEL"
-  java_arg_16: "-Djavax.security.auth.useSubjectCredsOnly=true"
+  java.arg.2: -Xms512m
+  java.arg.3: -Xmx512m
 
+# Specify any property from logback.xml here. Leave blank for defaults.
+# Use Ansible's xml xpath expressions as keys (https://docs.ansible.com/ansible/latest/modules/xml_module.html)
+# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/logback.xml for current options.
 logback:
-  app_file_max_file_size: "100MB"
-  app_file_max_history: "30"
-  user_file_max_history: "30"
-  bootstrap_file_max_history: "5"
+  /configuration/appender[@name="APP_FILE"]/rollingPolicy/maxFileSize: 100MB
 
-login_identity_provider:
+initial_admin_identity: ""
+
+login_identity_providers:
   # Can be one of 'ldap-provider' or 'kerberos-provider'. Leave blank for no RBAC.
-  identifier: ""
-  initial_admin_identity: ""
-  ldap:
-    authentication_strategy: "START_TLS"
-    manager_dn: ""
-    manager_password: ""
-    tls_keystore: ""
-    tls_keystore_password: ""
-    tls_keystore_type: ""
-    tls_truststore: ""
-    tls_truststore_password: ""
-    tls_truststore_type: ""
-    tls_client_auth: ""
-    tls_protocol: ""
-    tls_shutdown_gracefully: ""
-    referral_strategy: "FOLLOW"
-    connect_timeout: "10 secs"
-    read_timeout: "10 secs"
-    url: ""
-    user_search_base: ""
-    user_search_filter: ""
-    identity_strategy: "USE_DN"
-    authentication_expiration: "12 hours"
-  kerberos:
-    default_realm: "NIFI.APACHE.ORG"
-    authentication_expiration: "12 hours"
+  /loginIdentityProviders/provider/identifier: ""
