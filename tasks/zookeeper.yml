@@ -1,27 +1,19 @@
 ---
 - name: Create Zookeeper data directory
   file:
-    path: "{{ config_dirs.nifi_external_config }}/state/zookeeper"
+    path: "{{ zookeeper.dataDir }}"
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
 
-- name: Create Zookeeper ID file from template
-  vars:
-    myid: "{{ my_idx + 1 }}"
-  template:
-    src: "templates/myid.j2"
-    dest: "{{ config_dirs.nifi_external_config }}/state/zookeeper/myid"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
-  when: "item == inventory_hostname"
-  with_items: "{{ nifi_servers }}"
-  loop_control:
-    index_var: my_idx
+- name: Create Zookeeper ID file
+  copy:
+    content: "{{ zookeeper_myid }}"
+    dest: "{{ zookeeper.dataDir }}/myid"
 
-- name: Copy zookeeper.properties template
-  template:
-    src: "templates/zookeeper.properties.j2"
-    dest: "{{ config_dirs.nifi_home }}/conf/zookeeper.properties"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
+- name: Update zookeeper.properties
+  lineinfile:
+    path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
+    line: "{{ item.key }}={{ item.value }}"
+    regexp: "^{{ item.key }}"
+  with_dict: "{{ zookeeper }}"

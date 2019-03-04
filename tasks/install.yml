@@ -8,14 +8,14 @@
   unarchive:
     remote_src: "yes"
     src: "/tmp/nifi-{{ nifi_version }}-bin.tar.gz"
-    dest: "{{ config_dirs.nifi_install }}/"
+    dest: "{{ nifi_config_dirs.install }}/"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
-    creates: "{{ config_dirs.nifi_install }}/nifi-{{ nifi_version }}"
+    creates: "{{ nifi_config_dirs.install }}/nifi-{{ nifi_version }}"
 
 - name: Fix permissions
   file:
-    path: "{{ config_dirs.nifi_install }}/nifi-{{ nifi_version }}"
+    path: "{{ nifi_config_dirs.install }}/nifi-{{ nifi_version }}"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
     recurse: "yes"
@@ -23,7 +23,7 @@
 - name: Create NiFi symlink
   file:
     src: "nifi-{{ nifi_version }}"
-    path: "{{ config_dirs.nifi_home }}"
+    path: "{{ nifi_config_dirs.home }}"
     state: "link"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"

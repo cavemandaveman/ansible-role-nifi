@@ -16,7 +16,7 @@
 
 - name: Create install directory
   file:
-    path: "{{ config_dirs.nifi_install }}"
+    path: "{{ nifi_config_dirs.install }}"
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
@@ -24,5 +24,5 @@
 - name: Set NiFi home
   lineinfile:
     path: "/etc/environment"
-    line: "export NIFI_HOME={{ config_dirs.nifi_home }}"
+    line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
     create: "yes"

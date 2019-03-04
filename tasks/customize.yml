@@ -1,35 +1,35 @@
 ---
 - name: Create shared resources directory
   file:
-    path: "{{ config_dirs.nifi_external_config }}"
+    path: "{{ nifi_config_dirs.external_config }}"
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
 
 - name: Update nifi.properties
   lineinfile:
-    path: "{{ config_dirs.nifi_home }}/conf/nifi.properties"
+    path: "{{ nifi_config_dirs.home }}/conf/nifi.properties"
     line: "{{ item.key }}={{ item.value }}"
     regexp: "^{{ item.key }}"
   with_dict: "{{ nifi_properties }}"
 
 - name: Update bootstrap.conf
   lineinfile:
-    path: "{{ config_dirs.nifi_home }}/conf/bootstrap.conf"
+    path: "{{ nifi_config_dirs.home }}/conf/bootstrap.conf"
     line: "{{ item.key }}={{ item.value }}"
     regexp: "^{{ item.key }}"
-  with_dict: "{{ bootstrap_conf }}"
+  with_dict: "{{ bootstrap }}"
 
 - name: Update state-management.xml
   xml:
-    path: "{{ config_dirs.nifi_home }}/conf/state-management.xml"
+    path: "{{ nifi_config_dirs.home }}/conf/state-management.xml"
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
-  with_dict: "{{ state-management }}"
+  with_dict: "{{ state_management }}"
 
 - name: Update logback.xml
   xml:
-    path: "{{ config_dirs.nifi_home }}/conf/logback.xml"
+    path: "{{ nifi_config_dirs.home }}/conf/logback.xml"
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
   with_dict: "{{ logback }}"
@@ -37,11 +37,11 @@
 - name: Update login-identity-providers.xml
   block:
     - replace:
-        path: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
+        path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
         regexp: "^.*To enable the {{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}.*$"
         replace: ""
     - xml:
-        path: "{{ config_dirs.nifi_home }}/conf/login-identity-providers.xml"
+        path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
       with_dict: "{{ login_identity_providers }}"
@@ -50,11 +50,11 @@
 - name: Update authorizers.xml
   block:
     - replace:
-        path: "{{ config_dirs.nifi_home }}/conf/authorizers.xml"
+        path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         regexp: "^.*To enable the {{ authorizers['/authorizers/userGroupProvider/identifier'] }}.*$"
         replace: ""
     - xml:
-        path: "{{ config_dirs.nifi_home }}/conf/authorizers.xml"
+        path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
       with_dict: "{{ authorizers }}"
@@ -62,6 +62,6 @@
 
 - name: Prepare Zookeeper
   include: zookeeper.yml
-  when:
+  when: 
     - nifi_properties['nifi.state.management.embedded.zookeeper.start'] is defined
     - nifi_properties['nifi.state.management.embedded.zookeeper.start'] | bool == true

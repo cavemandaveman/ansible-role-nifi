@@ -4,51 +4,50 @@ nifi_version: "1.9.0"
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: "http://apache.cs.utah.edu"
 
-# array of server hostnames, by default reads 'nifi_servers' group from inventory file
-nifi_servers: "{{ groups['nifi_servers'] }}"
-
 nifi_user: "nifi"
 nifi_group: "nifi"
 
-config_dirs:
-  nifi_install: "/opt/nifi/releases"
-  nifi_home: "/opt/nifi/releases/current"
-  nifi_external_config: "/opt/nifi/config_resources"
+nifi_config_dirs:
+  install: "/opt/nifi/releases"
+  home: "/opt/nifi/releases/current"
+  external_config: "/opt/nifi/config_resources"
 
-# Specify any property from nifi.properties here. Leave blank for defaults.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/nifi.properties for current options.
+# Specify any property from nifi.properties here.
 nifi_properties:
   nifi.web.http.port: 8080
 
-# Specify any property from bootstrap.conf here. Leave blank for defaults.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/bootstrap.conf for current options.
-bootstrap_conf:
+# Specify any property from bootstrap.conf here.
+bootstrap:
   java.arg.2: -Xms512m
   java.arg.3: -Xmx512m
 
-# Specify any property from logback.xml here. Leave blank for defaults.
+# Specify any property from logback.xml here.
 # Use XPath expressions as keys.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/logback.xml for current options.
 logback:
   /configuration/appender[@name="APP_FILE"]/rollingPolicy/maxFileSize: 100MB
+  /configuration/appender[@name="APP_FILE"]/rollingPolicy/maxHistory: 30
 
 # Specify any property from login-identity-providers.xml here.
 # Use XPath expressions as keys.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/login-identity-providers.xml for current options.
 login_identity_providers:
   # Can be one of 'ldap-provider' or 'kerberos-provider'. Leave blank for no RBAC.
   /loginIdentityProviders/provider/identifier: ""
 
-# Specify any property from state-management.xml here. Leave blank for defaults.
+# Specify any property from state-management.xml here.
 # Use XPath expressions as keys.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/state-management.xml for current options.
 state_management:
-  /stateManagement/local-provider/property[@name="Directory"]: "{{ config_dirs.nifi_external_config }}/state/local"
+  /stateManagement/local-provider/property[@name="Directory"]: "{{ nifi_config_dirs.external_config }}/state/local"
 
-# Specify any property from authorizers.xml here. Leave blank for defaults.
+# Specify any property from authorizers.xml here.
 # Use XPath expressions as keys.
-# See https://github.com/apache/nifi/blob/master/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-resources/src/main/resources/conf/authorizers.xml for current options.
 authorizers:
   /authorizers/userGroupProvider/identifier: "file-user-group-provider"
-  /authorizers/userGroupProvider/property[@name="Users File"]: "{{ config_dirs.nifi_external_config }}/users.xml"
-  /authorizers/accessPolicyProvider/property[@name="Authorizations File"]: "{{ config_dirs.nifi_external_config }}/authorizations.xml"
+  /authorizers/userGroupProvider/property[@name="Users File"]: "{{ nifi_config_dirs.external_config }}/users.xml"
+  /authorizers/accessPolicyProvider/property[@name="Authorizations File"]: "{{ nifi_config_dirs.external_config }}/authorizations.xml"
+
+# The following zookeeper properties are only used if
+# nifi_properties.nifi.state.management.embedded.zookeeper.start == true
+zookeeper_myid: "{{ ansible_default_ipv4.address.split('.')[-1] }}"
+# Specify any property from zookeeper.properties here.
+zookeeper:
+  dataDir: "{{ nifi_config_dirs.external_config }}/state/zookeeper"
