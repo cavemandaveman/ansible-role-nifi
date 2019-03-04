@@ -36,11 +36,13 @@
 
 - name: Update login-identity-providers.xml
   block:
-    - replace:
+    - name: Uncomment block in login-identity-providers.xml
+      replace:
         path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
         regexp: "^.*To enable the {{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}.*$"
         replace: ""
-    - xml:
+    - name: Update properties in login-identity-providers.xml
+      xml:
         path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
@@ -49,11 +51,13 @@
 
 - name: Update authorizers.xml
   block:
-    - replace:
+    - name: Uncomment block in authorizers.xml
+      replace:
         path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         regexp: "^.*To enable the {{ authorizers['/authorizers/userGroupProvider/identifier'] }}.*$"
         replace: ""
-    - xml:
+    - name: Update properties in authorizers.xml
+      xml:
         path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
@@ -62,6 +66,6 @@
 
 - name: Prepare Zookeeper
   include: zookeeper.yml
-  when: 
+  when:
     - nifi_properties['nifi.state.management.embedded.zookeeper.start'] is defined
-    - nifi_properties['nifi.state.management.embedded.zookeeper.start'] | bool == true
+    - nifi_properties['nifi.state.management.embedded.zookeeper.start'] | bool
