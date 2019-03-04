@@ -14,6 +14,14 @@ nifi_config_dirs:
 
 # Specify any property from nifi.properties here.
 nifi_properties:
+  nifi.flow.configuration.file: "{{ nifi_config_dirs.external_config }}/flow.xml.gz"
+  nifi.flow.configuration.archive.dir: "{{ nifi_config_dirs.external_config }}/archive/"
+  nifi.nar.library.directory.custom: "{{ nifi_config_dirs.external_config }}/custom_nars"
+  nifi.database.directory: "{{ nifi_config_dirs.external_config }}/database_repository"
+  nifi.flowfile.repository.directory: "{{ nifi_config_dirs.external_config }}/flowfile_repository"
+  nifi.content.repository.directory.default: "{{ nifi_config_dirs.external_config }}/content_repository"
+  nifi.provenance.repository.directory.default: "{{ nifi_config_dirs.external_config }}/provenance_repository"
+  nifi.security.user.login.identity.provider: "{{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}"
   nifi.web.http.port: 8080
 
 # Specify any property from bootstrap.conf here.
