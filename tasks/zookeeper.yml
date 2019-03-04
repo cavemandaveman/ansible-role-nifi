@@ -17,7 +17,7 @@
       lineinfile:
         state: absent
         path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
-        regexp: "^server.1"
+        regexp: "^server.*$"
     - name: Update config in zookeeper.properties
       lineinfile:
         path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
