@@ -12,8 +12,15 @@
     dest: "{{ zookeeper.dataDir }}/myid"
 
 - name: Update zookeeper.properties
-  lineinfile:
-    path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
-    line: "{{ item.key }}={{ item.value }}"
-    regexp: "^{{ item.key }}"
-  with_dict: "{{ zookeeper }}"
+  block:
+    - name: Remove server line in zookeeper.properties
+      lineinfile:
+        state: absent
+        path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
+        regexp: "^server.1"
+    - name: Update config in zookeeper.properties
+      lineinfile:
+        path: "{{ nifi_config_dirs.home }}/conf/zookeeper.properties"
+        line: "{{ item.key }}={{ item.value }}"
+        regexp: "^{{ item.key }}"
+      with_dict: "{{ zookeeper }}"
