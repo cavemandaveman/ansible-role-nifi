@@ -90,7 +90,7 @@ Basic 3 node NiFi cluster using embedded Zookeeper:
       nifi.state.management.embedded.zookeeper.start: true
       nifi.zookeeper.connect.string: nifi_server1:2181,nifi_server2:2181,nifi_server3:2181
     state_management:
-       /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string] }}"
+       /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string'] }}"
     # Assuming nifi_server1 = 192.168.1.10, nifi_server2 = 192.168.1.11, nifi_server3 = 192.168.1.12
     # we have Ansible automatically set the myid file on each host to last octet of the node's IP address
     # and we set the last part of the zookeeper['server.x'] keys to those same numbers.
