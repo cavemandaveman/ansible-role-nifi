@@ -1,16 +1,16 @@
 ---
-nifi_version: "1.9.0"
+nifi_version: 1.9.0
 
 # See https://www.apache.org/dyn/closer.lua to find mirrors
-download_mirror_uri: "http://apache.cs.utah.edu"
+download_mirror_uri: http://apache.cs.utah.edu
 
-nifi_user: "nifi"
-nifi_group: "nifi"
+nifi_user: nifi
+nifi_group: nifi
 
 nifi_config_dirs:
-  install: "/opt/nifi/releases"
-  home: "/opt/nifi/releases/current"
-  external_config: "/opt/nifi/config_resources"
+  install: /opt/nifi/releases
+  home: /opt/nifi/releases/current
+  external_config: /opt/nifi/config_resources
 
 # Specify any property from nifi.properties here.
 nifi_properties:
@@ -49,7 +49,7 @@ state_management:
 # Specify any property from authorizers.xml here.
 # Use XPath expressions as keys.
 authorizers:
-  /authorizers/userGroupProvider/identifier: "file-user-group-provider"
+  /authorizers/userGroupProvider/identifier: file-user-group-provider
   /authorizers/userGroupProvider/property[@name="Users File"]: "{{ nifi_config_dirs.external_config }}/users.xml"
   /authorizers/accessPolicyProvider/property[@name="Authorizations File"]: "{{ nifi_config_dirs.external_config }}/authorizations.xml"
 
