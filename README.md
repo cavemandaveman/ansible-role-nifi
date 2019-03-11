@@ -110,6 +110,9 @@ Secure single node NiFi instance with LDAP:
     - cavemandaveman.nifi
   vars:
     nifi_properties:
+      # HTTP properties must be unset for HTTPS to work
+      nifi.web.http.host: ""
+      nifi.web.http.port: ""
       nifi.web.https.host: "{{ ansible_fqdn }}"
       nifi.web.https.port: 9443
       nifi.security.keystore: /path/to/keystore.jks
@@ -141,6 +144,9 @@ Secure 3 node NiFi cluster with LDAP using embedded zookeeper:
     - cavemandaveman.nifi
   vars:
     nifi_properties:
+      # HTTP properties must be unset for HTTPS to work
+      nifi.web.http.host: ""
+      nifi.web.http.port: ""
       nifi.web.https.host: "{{ ansible_fqdn }}"
       nifi.web.https.port: 9443
       nifi.security.keystore: /path/to/keystore.jks
