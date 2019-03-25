@@ -90,7 +90,7 @@ Basic 3 node NiFi cluster using embedded Zookeeper:
       nifi.state.management.embedded.zookeeper.start: true
       nifi.zookeeper.connect.string: nifi_server1:2181,nifi_server2:2181,nifi_server3:2181
     state_management:
-       /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string'] }}"
+      /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string'] }}"
     # Assuming nifi_server1 = 192.168.1.10, nifi_server2 = 192.168.1.11, nifi_server3 = 192.168.1.12
     # we have Ansible automatically set the myid file on each host to last octet of the node's IP address
     # and we set the 'X' of the zookeeper['server.X'] keys to those same numbers.
@@ -184,7 +184,7 @@ Secure 3 node NiFi cluster with LDAP using embedded zookeeper:
       /authorizers/accessPolicyProvider/property[@name="Node Identity 2"]: CN=nifi_server2.example.com, O=ExampleLLC, L=Saint Louis, ST=Missouri, C=US
       /authorizers/accessPolicyProvider/property[@name="Node Identity 3"]: CN=nifi_server3.example.com, O=ExampleLLC, L=Saint Louis, ST=Missouri, C=US
     state_management:
-       /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string'] }}"
+      /stateManagement/cluster-provider/property[@name="Connect String"]: "{{ nifi_properties['nifi.zookeeper.connect.string'] }}"
     # Assuming nifi_server1 = 192.168.1.10, nifi_server2 = 192.168.1.11, nifi_server3 = 192.168.1.12
     # we have Ansible automatically set the myid file on each host to last octet of the node's IP address
     # and we set the 'X' of the zookeeper['server.X'] keys to those same numbers.
