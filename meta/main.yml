@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: nifi
   author: cavemandaveman
-  description: Apache NiFi
+  description: An Ansible Role that installs NiFi on Linux. By default, it installs NiFi in a way that makes upgrading painless.
   license: GPLv3
   min_ansible_version: 2.6
   platforms:

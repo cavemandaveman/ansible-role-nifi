@@ -25,9 +25,9 @@ By default, this is the directory structure that will be created:
 |--opt/
   |--nifi/
     |--releases/
-      |--current -> nifi-1.9.0/
+      |--current -> nifi-1.9.1/
       |--nifi-1.8.0/
-      |--nifi-1.9.0/
+      |--nifi-1.9.1/
     |--config_resources/
       |--archive/
       |--authorizations.xml
