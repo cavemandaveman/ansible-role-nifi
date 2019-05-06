@@ -8,8 +8,6 @@ User={{ nifi_user }}
 Group={{ nifi_group }}
 ExecStart={{ nifi_config_dirs.home }}/bin/nifi.sh start
 ExecStop={{ nifi_config_dirs.home }}/bin/nifi.sh stop
-ExecRestart={{ nifi_config_dirs.home }}/bin/nifi.sh restart
-ExecStatus={{ nifi_config_dirs.home }}/bin/nifi.sh status
 
 [Install]
 WantedBy=multi-user.target

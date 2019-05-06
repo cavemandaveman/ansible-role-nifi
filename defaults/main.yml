@@ -1,5 +1,5 @@
 ---
-nifi_version: 1.9.1
+nifi_version: 1.9.2
 
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: http://apache.cs.utah.edu
