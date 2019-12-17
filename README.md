@@ -130,6 +130,10 @@ Secure single node NiFi instance with LDAP:
       /loginIdentityProviders/provider/property[@name="Url"]: ldap://hostname:port
       /loginIdentityProviders/provider/property[@name="User Search Base"]: OU=people,DC=example,DC=com
       /loginIdentityProviders/provider/property[@name="User Search Filter"]: sAMAccountName={0}
+    authorizers_identifiers:
+      - file-user-group-provider
+      - ldap-user-group-provider
+      - composite-user-group-provider
     authorizers:
       /authorizers/userGroupProvider/property[@name="Initial User Identity 1"]: cn=John Smith,ou=people,dc=example,dc=com
       /authorizers/accessPolicyProvider/property[@name="Initial Admin Identity"]: cn=John Smith,ou=people,dc=example,dc=com
@@ -173,6 +177,10 @@ Secure 3 node NiFi cluster with LDAP using embedded zookeeper:
       /loginIdentityProviders/provider/property[@name="Url"]: ldap://hostname:port
       /loginIdentityProviders/provider/property[@name="User Search Base"]: OU=people,DC=example,DC=com
       /loginIdentityProviders/provider/property[@name="User Search Filter"]: sAMAccountName={0}
+    authorizers_identifiers:
+      - file-user-group-provider
+      - ldap-user-group-provider
+      - composite-user-group-provider
     authorizers:
       /authorizers/userGroupProvider/property[@name="Initial User Identity 1"]: cn=John Smith,ou=people,dc=example,dc=com
       # Use the full DN of the node certificates here
