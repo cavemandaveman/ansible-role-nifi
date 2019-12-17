@@ -55,6 +55,9 @@ authorizers:
   /authorizers/userGroupProvider/property[@name="Users File"]: "{{ nifi_config_dirs.external_config }}/users.xml"
   /authorizers/accessPolicyProvider/property[@name="Authorizations File"]: "{{ nifi_config_dirs.external_config }}/authorizations.xml"
 
+# Specify idenfiers of different authorizers
+authorizers_identifiers: {}
+
 # The following zookeeper properties are only used if
 # nifi_properties.nifi.state.management.embedded.zookeeper.start == true
 zookeeper_myid: "{{ ansible_default_ipv4.address.split('.')[-1] }}"

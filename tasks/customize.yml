@@ -54,15 +54,16 @@
     - name: Uncomment block in authorizers.xml
       replace:
         path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
-        regexp: "^.*To enable the {{ authorizers['/authorizers/userGroupProvider/identifier'] }}.*$"
+        regexp: "^.*To enable the {{ item }}.*$"
         replace: ""
+      with_items: "{{ authorizers_identifiers }}"
     - name: Update properties in authorizers.xml
       xml:
         path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
       with_dict: "{{ authorizers }}"
-  when: authorizers['/authorizers/userGroupProvider/identifier'] | length
+  when: authorizers_identifiers | length
 
 - name: Create Zookeeper JAAS configuration
   template:
