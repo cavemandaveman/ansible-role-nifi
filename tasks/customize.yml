@@ -64,6 +64,13 @@
       with_dict: "{{ authorizers }}"
   when: authorizers['/authorizers/userGroupProvider/identifier'] | length
 
+- name: Create Zookeeper JAAS configuration
+  template:
+    src: zookeeper-jaas.conf.j2
+    dest: "{{ nifi_config_dirs.external_config }}/zookeeper-jaas.conf"
+  when: 
+    - zookeeper_jaas | length
+
 - name: Prepare Zookeeper
   include: zookeeper.yml
   when:
