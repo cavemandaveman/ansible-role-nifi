@@ -10,14 +10,14 @@
   lineinfile:
     path: "{{ nifi_config_dirs.home }}/conf/nifi.properties"
     line: "{{ item.key }}={{ item.value }}"
-    regexp: "^{{ item.key }}"
+    regexp: "^{{ item.key }}="
   with_dict: "{{ nifi_properties }}"
 
 - name: Update bootstrap.conf
   lineinfile:
     path: "{{ nifi_config_dirs.home }}/conf/bootstrap.conf"
     line: "{{ item.key }}={{ item.value }}"
-    regexp: "^{{ item.key }}"
+    regexp: "^{{ item.key }}="
   with_dict: "{{ bootstrap }}"
 
 - name: Update state-management.xml
