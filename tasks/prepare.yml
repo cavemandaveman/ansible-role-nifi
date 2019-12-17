@@ -14,15 +14,28 @@
     create_home: "no"
     system: "yes"
 
-- name: Create install directory
+- name: Create directories
   file:
-    path: "{{ nifi_config_dirs.install }}"
+    path: "{{ item }}"
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
+  with_items:
+    - "{{ nifi_config_dirs.install }}"
+    - "{{ nifi_config_dirs.run }}"
+    - "{{ nifi_config_dirs.logs }}"
 
 - name: Set NiFi home
   lineinfile:
     path: "/etc/environment"
     line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
     create: "yes"
+
+- name: Set NiFi run and logs in env.sh
+  lineinfile:
+    path: "{{ nifi_config_dirs.home }}/bin/nifi-env.sh"
+    line: "{{ item.key }}={{ item.value }}"
+    regexp: "^{{ item.key }}"
+  with_dict:
+    "export NIFI_PID_DIR": "{{ nifi_config_dirs.run }}"
+    "export NIFI_LOG_DIR": "{{ nifi_config_dirs.logs }}"

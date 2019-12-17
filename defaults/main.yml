@@ -11,6 +11,8 @@ nifi_config_dirs:
   install: /opt/nifi/releases
   home: /opt/nifi/releases/current
   external_config: /opt/nifi/config_resources
+  run: /opt/nifi/releases/current/run
+  logs: /opt/nifi/releases/current/logs
 
 # Specify any property from nifi.properties here.
 nifi_properties:
