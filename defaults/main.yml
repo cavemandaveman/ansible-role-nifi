@@ -14,6 +14,11 @@ nifi_config_dirs:
   run: /opt/nifi/releases/current/run
   logs: /opt/nifi/releases/current/logs
 
+# Specify any NiFi variable in nifi-registry-env.sh here.
+nifi_environment:
+  "export NIFI_PID_DIR": "{{ nifi_config_dirs.run }}"
+  "export NIFI_LOG_DIR": "{{ nifi_config_dirs.logs }}"
+
 # Specify any property from nifi.properties here.
 nifi_properties:
   nifi.flow.configuration.file: "{{ nifi_config_dirs.external_config }}/flow.xml.gz"

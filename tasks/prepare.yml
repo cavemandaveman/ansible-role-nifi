@@ -30,12 +30,3 @@
     path: "/etc/environment"
     line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
     create: "yes"
-
-- name: Set NiFi run and logs in env.sh
-  lineinfile:
-    path: "{{ nifi_config_dirs.home }}/bin/nifi-env.sh"
-    line: "{{ item.key }}={{ item.value }}"
-    regexp: "^{{ item.key }}"
-  with_dict:
-    "export NIFI_PID_DIR": "{{ nifi_config_dirs.run }}"
-    "export NIFI_LOG_DIR": "{{ nifi_config_dirs.logs }}"
