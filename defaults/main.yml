@@ -14,7 +14,7 @@ nifi_config_dirs:
   run: /opt/nifi/releases/current/run
   logs: /opt/nifi/releases/current/logs
 
-# Specify any NiFi variable in nifi-registry-env.sh here.
+# Specify any NiFi variable in nifi-env.sh here.
 nifi_environment:
   "export NIFI_PID_DIR": "{{ nifi_config_dirs.run }}"
   "export NIFI_LOG_DIR": "{{ nifi_config_dirs.logs }}"
