@@ -1,4 +1,9 @@
 ---
+- name: Install lxml python module
+  apt:
+    name: python3-lxml
+    state: present
+
 - name: Create NiFi group
   group:
     name: "{{ nifi_group }}"
@@ -22,11 +27,4 @@
     group: "{{ nifi_group }}"
   with_items:
     - "{{ nifi_config_dirs.install }}"
-    - "{{ nifi_config_dirs.run }}"
-    - "{{ nifi_config_dirs.logs }}"
-
-- name: Set NiFi home
-  lineinfile:
-    path: "/etc/environment"
-    line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
-    create: "yes"
+ 

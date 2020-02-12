@@ -27,3 +27,20 @@
     state: "link"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: "{{ nifi_user }}"
+    group: "{{ nifi_group }}"
+  with_items:
+    - "{{ nifi_config_dirs.run }}"
+    - "{{ nifi_config_dirs.logs }}"
+
+- name: Set NiFi home
+  lineinfile:
+    path: "/etc/environment"
+    line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
+    create: "yes"
+
