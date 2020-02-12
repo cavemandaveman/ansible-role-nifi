@@ -69,7 +69,7 @@
   template:
     src: zookeeper-jaas.conf.j2
     dest: "{{ nifi_config_dirs.external_config }}/zookeeper-jaas.conf"
-  when: 
+  when:
     - zookeeper_jaas | length
 
 - name: Prepare Zookeeper
