@@ -27,4 +27,3 @@
     group: "{{ nifi_group }}"
   with_items:
     - "{{ nifi_config_dirs.install }}"
- 

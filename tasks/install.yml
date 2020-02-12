@@ -43,4 +43,3 @@
     path: "/etc/environment"
     line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
     create: "yes"
-
