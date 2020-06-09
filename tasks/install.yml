@@ -39,7 +39,6 @@
     - "{{ nifi_config_dirs.logs }}"
 
 - name: Set NiFi home
-  lineinfile:
-    path: "/etc/environment"
-    line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
-    create: "yes"
+  copy:
+    dest: "/etc/profile.d/nifi-home.sh"
+    content: "export NIFI_HOME={{ nifi_config_dirs.home }}"
