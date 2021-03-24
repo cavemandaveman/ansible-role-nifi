@@ -3,11 +3,12 @@ galaxy_info:
   author: cavemandaveman
   description: An Ansible Role that installs NiFi on Linux. By default, it installs NiFi in a way that makes upgrading painless.
   license: GPLv3
-  min_ansible_version: 2.6
+  min_ansible_version: "2.6"
   platforms:
-  - name: EL
-    versions:
-    - 7
+    - name: EL
+      versions:
+        - "7"
+        - "8"
   galaxy_tags:
     - apache
     - nifi
