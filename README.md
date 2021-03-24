@@ -46,6 +46,7 @@ Any key/value pair from a config file can be added to the following dicts. Dict 
 ```yaml
 nifi_properties:
 bootstrap:
+nifi_env:
 logback:
 login_identity_providers:
 state_management:

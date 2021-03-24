@@ -20,6 +20,13 @@
     regexp: "^{{ item.key }}="
   with_dict: "{{ bootstrap }}"
 
+- name: Update nifi-env.sh
+  lineinfile:
+    path: "{{ nifi_config_dirs.home }}/bin/nifi-env.sh"
+    line: "export {{ item.key }}={{ item.value }}"
+    regexp: "^export {{ item.key }}="
+  with_dict: "{{ nifi_env }}"
+
 - name: Update state-management.xml
   xml:
     path: "{{ nifi_config_dirs.home }}/conf/state-management.xml"

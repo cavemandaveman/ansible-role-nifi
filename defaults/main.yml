@@ -29,6 +29,9 @@ bootstrap:
   java.arg.2: -Xms512m
   java.arg.3: -Xmx512m
 
+nifi_env:
+  NIFI_HOME: "{{ nifi_config_dirs.home }}"
+
 # Specify any property from logback.xml here.
 # Use XPath expressions as keys.
 logback:
