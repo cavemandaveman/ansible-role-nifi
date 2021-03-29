@@ -1,11 +1,4 @@
 ---
-- name: Create shared resources directory
-  file:
-    path: "{{ nifi_config_dirs.external_config }}"
-    state: "directory"
-    owner: "{{ nifi_user }}"
-    group: "{{ nifi_group }}"
-
 - name: Update nifi.properties
   lineinfile:
     path: "{{ nifi_config_dirs.home }}/conf/nifi.properties"

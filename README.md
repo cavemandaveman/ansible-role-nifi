@@ -10,10 +10,11 @@ Requires at least Java 8.
 
 See `defaults/main.yml` for all variables and how to specify them. For a deeper dive, the [NiFi System Administrator’s Guide](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html) is a great resource.
 
-The following specifies where to install NiFi, along with a home directory (which will be symbolically linked to the release). Also, a centralized config directory to store files that need not be changed (to avoid copying during upgrades).
+The following specifies where to download (or look for existing) binaries (tarballs), where to install NiFi, and a home directory which will be symbolically linked to the specified release. Also, a centralized config directory to store files that need not be changed (to avoid copying during upgrades). You can add more artbitrary key/value pairs to this dict and those directories will be created. This might be useful if you need extra directories for things like custom nars, drivers, etc.
 
 ```yaml
 nifi_config_dirs:
+  binaries: /tmp
   install: /opt/nifi/releases
   home: /opt/nifi/releases/current
   external_config: /opt/nifi/config_resources

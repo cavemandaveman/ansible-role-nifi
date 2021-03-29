@@ -14,12 +14,13 @@
     create_home: "no"
     system: "yes"
 
-- name: Create install directory
+- name: Create NiFi directories
   file:
-    path: "{{ nifi_config_dirs.install }}"
+    path: "{{ item.value }}"
     state: "directory"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
+  loop: "{{ nifi_config_dirs | dict2items }}"
 
 - name: Set NiFi home
   lineinfile:

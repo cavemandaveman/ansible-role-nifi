@@ -2,12 +2,13 @@
 nifi_version: 1.13.2
 
 # See https://www.apache.org/dyn/closer.lua to find mirrors
-download_mirror_uri: http://apache.cs.utah.edu
+download_mirror_uri: https://apache.claz.org
 
 nifi_user: nifi
 nifi_group: nifi
 
 nifi_config_dirs:
+  binaries: /tmp
   install: /opt/nifi/releases
   home: /opt/nifi/releases/current
   external_config: /opt/nifi/config_resources
@@ -26,8 +27,8 @@ nifi_properties:
 
 # Specify any property from bootstrap.conf here.
 bootstrap:
-  java.arg.2: -Xms512m
-  java.arg.3: -Xmx512m
+  java.arg.2: '-Xms512m'
+  java.arg.3: '-Xmx512m'
 
 # Specify any property from nifi-env.sh here.
 nifi_env:
