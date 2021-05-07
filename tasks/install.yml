@@ -21,7 +21,7 @@
 - name: Unpack NiFi binary
   unarchive:
     remote_src: "yes"
-    src: "/tmp/nifi-{{ nifi_version }}-bin.tar.gz"
+    src: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
     dest: "{{ nifi_config_dirs.install }}/"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"
