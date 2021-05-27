@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Type=forking
+LimitNOFILE=50000
 User={{ nifi_user }}
 Group={{ nifi_group }}
 ExecStart={{ nifi_config_dirs.home }}/bin/nifi.sh start
