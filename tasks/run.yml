@@ -4,9 +4,12 @@
     src: "templates/nifi.service.j2"
     dest: "/etc/systemd/system/nifi.service"
 
-- name: Re/Start NiFi
+- name: Flush Handlers
+  meta: flush_handlers
+
+- name: Start NiFi
   service:
     name: "nifi.service"
-    state: restarted
+    state: started
     daemon_reload: yes
     enabled: yes

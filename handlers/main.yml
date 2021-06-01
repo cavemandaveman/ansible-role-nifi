@@ -1,0 +1,7 @@
+--- 
+- name: restart_nifi
+  service:
+    name: "nifi.service"
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

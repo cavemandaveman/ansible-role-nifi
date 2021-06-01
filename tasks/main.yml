@@ -4,9 +4,11 @@
 
 - name: Install NiFi
   include: install.yml
+  notify: restart_nifi
 
 - name: Customize NiFi
   include: customize.yml
+  notify: restart_nifi
 
 - name: Run NiFi as system service
   include: run.yml
