@@ -15,7 +15,7 @@
   get_url:
     url: "{{ download_mirror_uri }}/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.tar.gz"
     dest: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
-    checksum: "sha256:{{ sha256_sum }}"
+    checksum: "sha256:{{ sha256_sum.content }}"
   when: not tar_file.stat.exists
 
 - name: Unpack NiFi binary
