@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    download_mirror_uri: https://mirrors.gigenet.com/apache
+
+  pre_tasks:
+  - name: Update apt cache.
+    apt: update_cache=true cache_valid_time=600
+    when: ansible_os_family == 'Debian'
+    changed_when: false
+
+  - name: Install lxml through pip
+    pip:
+      name: lxml
+
+  roles:
+  - geerlingguy.java
+  - cavemandaveman.nifi
