@@ -2,6 +2,9 @@
 - name: Check if NiFi binary exists
   stat:
     path: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
   register: tar_file
 
 - name: Get NiFi binary checksum
