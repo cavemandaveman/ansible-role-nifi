@@ -28,6 +28,7 @@
     path: "{{ nifi_config_dirs.home }}/conf/state-management.xml"
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
+    pretty_print: yes
   with_dict: "{{ state_management }}"
   notify: restart_nifi
 
@@ -36,6 +37,7 @@
     path: "{{ nifi_config_dirs.home }}/conf/logback.xml"
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
+    pretty_print: yes
   with_dict: "{{ logback }}"
   notify: restart_nifi
 
