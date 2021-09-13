@@ -8,5 +8,5 @@
 - name: Customize NiFi
   include: customize.yml
 
-- name: Run NiFi as system service
-  include: run.yml
+- name: Add NiFi as system service
+  include: systemd.yml
