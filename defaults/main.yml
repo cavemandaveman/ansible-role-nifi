@@ -1,5 +1,5 @@
 ---
-nifi_version: 1.13.2
+nifi_version: 1.14.0
 
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: https://apache.claz.org
@@ -22,8 +22,7 @@ nifi_properties:
   nifi.flowfile.repository.directory: "{{ nifi_config_dirs.external_config }}/flowfile_repository"
   nifi.content.repository.directory.default: "{{ nifi_config_dirs.external_config }}/content_repository"
   nifi.provenance.repository.directory.default: "{{ nifi_config_dirs.external_config }}/provenance_repository"
-  nifi.security.user.login.identity.provider: "{{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}"
-  nifi.web.http.port: 8080
+  nifi.security.user.login.identity.provider: single-user-provider
 
 # Specify any property from bootstrap.conf here.
 bootstrap:
@@ -43,20 +42,22 @@ logback:
 # Specify any property from login-identity-providers.xml here.
 # Use XPath expressions as keys.
 login_identity_providers:
-  # Can be one of 'ldap-provider' or 'kerberos-provider'. Leave blank for no RBAC.
-  /loginIdentityProviders/provider/identifier: ""
+  /loginIdentityProviders/provider/identifier: single-user-provider
+  /loginIdentityProviders/provider/class: org.apache.nifi.authentication.single.user.SingleUserLoginIdentityProvider
 
 # Specify any property from state-management.xml here.
 # Use XPath expressions as keys.
 state_management:
   /stateManagement/local-provider/property[@name="Directory"]: "{{ nifi_config_dirs.external_config }}/state/local"
 
+# Specify how many userGroupProviders are used authorizers.xml.
+authorizers_user_group_providers: 0
+
 # Specify any property from authorizers.xml here.
 # Use XPath expressions as keys.
 authorizers:
-  /authorizers/userGroupProvider/identifier: file-user-group-provider
-  /authorizers/userGroupProvider/property[@name="Users File"]: "{{ nifi_config_dirs.external_config }}/users.xml"
-  /authorizers/accessPolicyProvider/property[@name="Authorizations File"]: "{{ nifi_config_dirs.external_config }}/authorizations.xml"
+  /authorizers/authorizer/identifier: single-user-authorizer
+  /authorizers/authorizer/class: org.apache.nifi.authorization.single.user.SingleUserAuthorizer
 
 # The following zookeeper properties are only used if
 # nifi_properties.nifi.state.management.embedded.zookeeper.start == true

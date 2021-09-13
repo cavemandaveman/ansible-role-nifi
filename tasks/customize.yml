@@ -5,6 +5,7 @@
     line: "{{ item.key }}={{ item.value }}"
     regexp: "^{{ item.key }}="
   with_dict: "{{ nifi_properties }}"
+  notify: restart_nifi
 
 - name: Update bootstrap.conf
   lineinfile:
@@ -12,6 +13,7 @@
     line: "{{ item.key }}={{ item.value }}"
     regexp: "^{{ item.key }}="
   with_dict: "{{ bootstrap }}"
+  notify: restart_nifi
 
 - name: Update nifi-env.sh
   lineinfile:
@@ -19,6 +21,7 @@
     line: "export {{ item.key }}={{ item.value }}"
     regexp: "^export {{ item.key }}="
   with_dict: "{{ nifi_env }}"
+  notify: restart_nifi
 
 - name: Update state-management.xml
   xml:
@@ -26,6 +29,7 @@
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
   with_dict: "{{ state_management }}"
+  notify: restart_nifi
 
 - name: Update logback.xml
   xml:
@@ -33,39 +37,43 @@
     xpath: "{{ item.key }}"
     value: "{{ item.value }}"
   with_dict: "{{ logback }}"
+  notify: restart_nifi
 
 - name: Update login-identity-providers.xml
   block:
-    - name: Uncomment block in login-identity-providers.xml
-      replace:
-        path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
-        regexp: "^.*To enable the {{ login_identity_providers['/loginIdentityProviders/provider/identifier'] }}.*$"
-        replace: ""
-    - name: Update properties in login-identity-providers.xml
+    - name: Seed login-identity-providers.xml
+      template:
+        src: "templates/login-identity-providers.xml.j2"
+        dest: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
+    - name: Add properties to login-identity-providers.xml
       xml:
         path: "{{ nifi_config_dirs.home }}/conf/login-identity-providers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
+        pretty_print: yes
       with_dict: "{{ login_identity_providers }}"
-  when: login_identity_providers['/loginIdentityProviders/provider/identifier'] | length
+      notify: restart_nifi
+  when: login_identity_providers | length
 
 - name: Update authorizers.xml
   block:
-    - name: Uncomment block in authorizers.xml
-      replace:
-        path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
-        regexp: "^.*To enable the {{ authorizers['/authorizers/userGroupProvider/identifier'] }}.*$"
-        replace: ""
-    - name: Update properties in authorizers.xml
+    - name: Seed authorizers.xml
+      template:
+        src: "templates/authorizers.xml.j2"
+        dest: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
+    - name: Add properties to authorizers.xml
       xml:
         path: "{{ nifi_config_dirs.home }}/conf/authorizers.xml"
         xpath: "{{ item.key }}"
         value: "{{ item.value }}"
+        pretty_print: yes
       with_dict: "{{ authorizers }}"
-  when: authorizers['/authorizers/userGroupProvider/identifier'] | length
+      notify: restart_nifi
+  when: authorizers | length
 
 - name: Prepare Zookeeper
   include: zookeeper.yml
   when:
     - nifi_properties['nifi.state.management.embedded.zookeeper.start'] is defined
     - nifi_properties['nifi.state.management.embedded.zookeeper.start'] | bool
+  notify: restart_nifi
