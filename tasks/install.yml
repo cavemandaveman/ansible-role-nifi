@@ -1,7 +1,7 @@
 ---
 - name: Check if NiFi binary exists
   stat:
-    path: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
+    path: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.zip"
     get_attributes: no
     get_checksum: no
     get_mime: no
@@ -9,22 +9,23 @@
 
 - name: Get NiFi binary checksum
   uri:
-    url: https://archive.apache.org/dist/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.tar.gz.sha256
+    url: https://downloads.apache.org/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.zip.sha256
     return_content: true
   register: sha256_sum
   when: not tar_file.stat.exists
 
 - name: Download NiFi binary
   get_url:
-    url: "{{ download_mirror_uri }}/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.tar.gz"
-    dest: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
+
+    url: "{{ download_mirror_uri }}/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.zip"
+    dest: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.zip"
     checksum: "sha256:{{ sha256_sum.content }}"
   when: not tar_file.stat.exists
 
 - name: Unpack NiFi binary
   unarchive:
     remote_src: "yes"
-    src: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.tar.gz"
+    src: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.zip"
     dest: "{{ nifi_config_dirs.install }}/"
     owner: "{{ nifi_user }}"
     group: "{{ nifi_group }}"

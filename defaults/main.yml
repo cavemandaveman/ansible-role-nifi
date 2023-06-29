@@ -1,5 +1,5 @@
 ---
-nifi_version: 1.14.0
+nifi_version: 1.22.0
 
 # See https://www.apache.org/dyn/closer.lua to find mirrors
 download_mirror_uri: https://apache.claz.org
