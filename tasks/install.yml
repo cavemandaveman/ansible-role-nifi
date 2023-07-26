@@ -21,6 +21,13 @@
     dest: "{{ nifi_config_dirs.binaries }}/nifi-{{ nifi_version }}-bin.zip"
     checksum: "sha256:{{ sha256_sum.content }}"
   when: not tar_file.stat.exists
+  register: get_url_result
+  vars:
+    max_retries: 4
+    retry_interval: 5
+  until: get_url_result is succeeded or retries >= max_retries
+  retries: 4
+  delay: 5
 
 - name: Unpack NiFi binary
   unarchive:
