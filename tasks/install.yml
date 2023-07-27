@@ -14,6 +14,8 @@
   register: sha256_sum
   when: not tar_file.stat.exists
 
+
+
 - name: Download NiFi binary
   get_url:
 
@@ -22,12 +24,8 @@
     checksum: "sha256:{{ sha256_sum.content }}"
   when: not tar_file.stat.exists
   register: get_url_result
-  vars:
-    max_retries: 4
-    retry_interval: 5
-  until: get_url_result is succeeded or retries >= max_retries
-  retries: 4
-  delay: 5
+  until: get_url_result is succeeded
+
 
 - name: Unpack NiFi binary
   unarchive:
