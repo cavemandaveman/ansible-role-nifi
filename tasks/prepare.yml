@@ -27,3 +27,20 @@
     path: "/etc/environment"
     line: "export NIFI_HOME={{ nifi_config_dirs.home }}"
     create: "yes"
+
+
+- name: Install java runtime environment
+  ansible.builtin.package:
+    update_cache: yes
+    name: default-jre
+
+- name: Install Python3 pip
+  ansible.builtin.package:
+    update_cache: no
+    name: python3-pip
+    state: present
+
+- name: Install lxml
+  ansible.builtin.pip:
+    name: lxml
+    state: present
